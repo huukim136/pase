@@ -31,12 +31,13 @@ The PASE+ parameters used in our most recently [published work](http://veu.talp.
 from pase.models.frontend import wf_builder
 pase = wf_builder('cfg/frontend/PASE+.cfg').eval()
 pase.load_pretrained('FE_e199.ckpt', load_last=True, verbose=True)
+pase.cuda()
 
 # Now we can forward waveforms as Torch tensors
 import torch
 x = torch.randn(1, 1, 100000) # example with random noise to check shape
 # y size will be (1, 256, 625), which are 625 frames of 256 dims each
-y = pase(x)
+y = pase(x.cuda())
 ```
 
 The encoder can be inserted in any PyTorch model and fine-tuned, just like any
